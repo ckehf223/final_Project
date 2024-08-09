@@ -5,7 +5,7 @@
         select * from member
     </select>
 	<select id="findById" resultType="Admin" parameterType="String">
-		SELECT * FROM ADMIN WHERE ID = #{id}
+		SELECT * FROM ADMIN WHERE USEREMAIL = #{email}
 	</select>
 
 </mapper>

@@ -90,6 +90,8 @@ public class SecurityConfig {
 				.requestMatchers("/auth/naver/**").permitAll()
 				.requestMatchers("/auth/google/**").permitAll()
 				.requestMatchers("/club/register").hasRole("MEMBER")
+				.requestMatchers("/admin/").permitAll()
+//				.requestMatchers("/admin/*").hasRole("ADMIN")
 				.anyRequest().permitAll());
 
 		http.oauth2Login((oauth2) -> oauth2

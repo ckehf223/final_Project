@@ -8,7 +8,7 @@ function Groups() {
   const backgroundColor = "#f1f7ff"; // 설정할 배경색
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/club")
+    fetch("http://localhost:8080/api/club/")
       .then((response) => response.json())
       .then((data) => {
         setClubs(data);

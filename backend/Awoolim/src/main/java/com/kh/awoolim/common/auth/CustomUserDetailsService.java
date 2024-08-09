@@ -33,8 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		memberData = memberMapper.findByEmail(username);
 		log.info("3번 지점");
 		if(memberData == null) {
-			//관리자 id 말고 관리자 username으로 칼럼명을 바꾸고 username으로 찾을것
-//			memberData = adminMapper.findById(username);
+			memberData = adminMapper.findById(username);
 		}
 
 		System.out.println(memberData.toString());

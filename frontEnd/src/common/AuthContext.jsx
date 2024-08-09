@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { login as loginService, logout as logoutService } from '/src/common/auth/authService';
+import { login as loginService, logout as logoutService, adminLogout as adminLogoutService } from '/src/common/auth/authService';
 import instance from '/src/common/auth/axios';
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -63,8 +64,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const adminLogout = async () => {
+    try {
+      await adminLogoutService();
+      setIsAuthenticated(false);
+      setLoginId('');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  }
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, socialLogin, loginId }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, adminLogout, socialLogin, loginId }}>
       {children}
     </AuthContext.Provider>
   );

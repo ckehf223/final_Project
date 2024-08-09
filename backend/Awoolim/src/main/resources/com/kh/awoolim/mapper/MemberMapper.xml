@@ -32,7 +32,8 @@
 	<!-- 추가된 부분 -->
 	<select id="findByPhone" resultType="Member"
 		parameterType="String">
-		SELECT * FROM MEMBER WHERE USERPHONE=#{phone}
+		SELECT * FROM MEMBER 
+		WHERE USERPHONE=#{phone}
 	</select>
 
 	<update id="updatePassword" parameterType="String">

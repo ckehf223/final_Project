@@ -27,7 +27,7 @@ function Category() {
       sportsLinkRef.current.focus();
     }
 
-    fetch("http://localhost:8080/api/club")
+    fetch("http://localhost:8080/api/club/")
       .then((response) => response.json())
       .then((data) => setClubs(data))
       .catch((error) => {

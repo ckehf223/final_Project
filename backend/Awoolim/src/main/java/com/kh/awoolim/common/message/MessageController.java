@@ -39,7 +39,7 @@ public class MessageController {
 	}
 
 	@PostMapping("send-sms")
-	public void sendSms(@RequestBody MessageRequest messageRequest, HttpSession session,HttpServletResponse response) {
+	public void sendSms(@RequestBody MessageRequest messageRequest, HttpSession session, HttpServletResponse response) {
 		String code = randomCode();
 		session.setAttribute("authenticationCode", code);
 
@@ -62,21 +62,32 @@ public class MessageController {
 	@PostMapping("/check-code")
 	public ResponseEntity<Integer> checkCode(@RequestBody CodeRequest codeRequest, HttpSession session) {
 		String storedCode = (String) session.getAttribute("authenticationCode");
-		log.info(codeRequest.getCode());
-		log.info(storedCode);
-		try {
-			if (storedCode != null && storedCode.equals(codeRequest.getCode())) {
+		log.info("Received Code: " + codeRequest.getCode());
+		log.info("Stored Code: " + storedCode);
+		log.info("Phone Number: " + codeRequest.getPhoneNumber());
+
+		if (storedCode == null) {
+			log.info("Stored code is null");
+			return ResponseEntity.status(HttpStatus.OK).body(Integer.valueOf(-1));
+		}
+
+		if (storedCode.equals(codeRequest.getCode())) {
+			try {
 				Member member = memberService.findByPhone(codeRequest.getPhoneNumber());
 				
 				if (member == null) {
+					log.info("check=code ENter");
 					return ResponseEntity.status(HttpStatus.OK).body(Integer.valueOf(1));
 				} else {
 					return ResponseEntity.status(HttpStatus.OK).body(Integer.valueOf(0));
 				}
+			} catch (Exception e) {
+				log.error("Error occurred while checking code", e);
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Integer.valueOf(-1));
 			}
+		} else {
+			log.info("Codes do not match");
 			return ResponseEntity.status(HttpStatus.OK).body(Integer.valueOf(-1));
-		}catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Integer.valueOf(-1));
 		}
 	}
 

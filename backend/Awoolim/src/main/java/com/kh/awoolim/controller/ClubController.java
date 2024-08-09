@@ -45,9 +45,10 @@ public class ClubController {
 	private ClubMemberService clubMemberService;
 
 	
-	@GetMapping
-    public List<Club> getAllClubs() {
+	@GetMapping("/")
+    public List<Club> getAllClubs(HttpServletResponse response) {
 		log.info("getAllClubs");
+		response.setStatus(HttpStatus.OK.value());
         return clubService.getAllClubs();
     }
 

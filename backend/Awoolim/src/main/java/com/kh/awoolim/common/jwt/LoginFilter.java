@@ -83,16 +83,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authentication) throws IOException, ServletException {
-
 		// 유저 정보
 		CustomUserDetails member = (CustomUserDetails) authentication.getPrincipal();
 		log.info("successFul " + member.getUserEmail());
+		
+
 		String userEmail = member.getUserEmail();
 		int userId = member.getUserId();
-		if(userEmail == null) {
-			userEmail = member.getUsername();
-		}
-
+		
 		Collection<? extends GrantedAuthority> authorities = member.getAuthorities();
 		Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
 		GrantedAuthority auth = iterator.next();

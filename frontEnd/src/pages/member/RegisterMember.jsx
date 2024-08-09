@@ -9,18 +9,18 @@ import axios from 'axios';
 const RegisterMember = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    console.log(queryParams);
+
     const [formData, setFormData] = useState({
-        useremail: queryParams.get('email'),
+        useremail: '',
         password: '',
         passwordCheck: '',
-        username: queryParams.get('name'),
+        username: '',
         usergender: '',
         userbirth: '',
         userphone: '',
         nickname: '',
         phoneCheckCode: '',
-        snsType: queryParams.get('type'),
+        snsType: '',
     });
 
     const [userEmailError, setUserEmailError] = useState('');
@@ -37,6 +37,16 @@ const RegisterMember = () => {
     const [userEmailSuccess, setUserEmailSuccess] = useState('');
 
     const nav = useNavigate();
+
+    useEffect(() => {
+        // 초기 상태 설정
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            useremail: queryParams.get('email') || '',
+            username: queryParams.get('name') || '',
+            snsType: queryParams.get('type') || '',
+        }));
+    }, [location.search]);
 
     useEffect(() => {
         let interval;
@@ -73,7 +83,7 @@ const RegisterMember = () => {
     };
     const handleCodeCheck = async () => {
         try {
-            await axios.post('http://localhost:8080/check-code',
+            const response = await axios.post('http://localhost:8080/check-code',
                 {
                     code: formData.phoneCheckCode,
                     phoneNumber: formData.userphone
@@ -82,22 +92,20 @@ const RegisterMember = () => {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true,
                 })
-                .then(response => {
-                    if (response.status === 200) {
-                        setPhoneCheckSuccess(true);
-                        if (response.data === 1) {
-                            setPhoneCheckMessage('인증되었습니다.');
-                            setUserPhoneError('')
-                            setIsActive(false);
-                        } else if (response.data === 0) {
-                            alert('이미 가입한 전화번호 입니다.');
-                            nav('/login', { replace: true })
-                        } else {
-                            setUserPhoneError('인증 번호를 확인해주세요')
-                            setFormData({ ...formData, phoneCheckCode: '' });
-                        }
-                    }
-                })
+
+            if (response.data === 1) {
+                setPhoneCheckMessage('인증되었습니다.');
+                setUserPhoneError('')
+                setIsActive(false);
+                phoneCheckSuccess(true);
+            } else if (response.data === 0) {
+                alert('이미 가입한 전화번호 입니다.');
+                nav('/login', { replace: true })
+            } else {
+                setUserPhoneError('인증 번호를 확인해주세요')
+                setFormData({ ...formData, phoneCheckCode: '' });
+            }
+
         } catch (error) {
             setPhoneCheckMessage('인증번호 확인에 실패했습니다.');
         }

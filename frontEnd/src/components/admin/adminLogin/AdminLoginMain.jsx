@@ -1,23 +1,30 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '/src/css/admin/AdminLoginMain.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser, faKey, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { login } from '/src/common/auth/authService';
+import { useAuth } from '/src/common/AuthContext';
 
 const AdminLoginMain = () => {
     const nav = useNavigate();
-
+    const { login, isAuthenticated } = useAuth();
     const [useremail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState('');
 
+    useEffect(() => {
+        if (isAuthenticated) {
+            nav('/admin/dashboard', { replace: true });
+        }
+    })
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await login(useremail, password);
-            nav('/', { replace: true });
+            nav('/admin/dashboard', { replace: true });
         } catch (error) {
             setMessage('아이디 비밀번호를 확인해 주세요');
             setUserEmail('');

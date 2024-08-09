@@ -11,5 +11,5 @@ import com.kh.awoolim.domain.Member;
 public interface AdminMapper {
     List<Member> userList();
     
-    public Admin findById(String id);
+    public Admin findById(String email);
 }

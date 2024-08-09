@@ -8,17 +8,15 @@ import LoginMain from '/src/pages/member/login/LoginMain';
 import FindbyId from '/src/pages/member/login/FindbyId';
 import FindbyPw from '/src/pages/member/login/FindbyPw';
 import { AuthProvider } from '/src/common/AuthContext';
-import PrivateRoute from '/src/common/PrivateRoute';
 import OAuth2RedirectHandler from './common/OAuth2RedirectHandler';
 {/* 추가한 부분 */ }
 function App() {
   return (
     <>
       <AuthProvider>
-        {/* <Router> */}
         <Routes>
           <Route path="/*" element={<Member />} />
-          <Route path="/admin/*" element={<PrivateRoute element={<Admin />} />} />
+          <Route path="/admin/*" element={<Admin />} />
           <Route path='/login' element={<LoginMain />} />
           <Route path='/signup' element={<MemberIntro />} />
           <Route path='/joinMember' element={<RegisterMember />} />

@@ -39,7 +39,8 @@ public class ClubService {
 	}
 	
     public List<Club> getAllClubs() {
-        return clubMapper.getAllClubs();
+    	List<Club> list = clubMapper.getAllClubs();
+        return list;
     }
 
     public byte[] getImage(String imageName) {
