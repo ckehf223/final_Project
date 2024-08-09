@@ -35,7 +35,7 @@ const AdminLoginMain = () => {
                 <div className="logo-container">
                     <img src="\src\assets\images\headerLogo.png" alt="어울림" />
                 </div>
-                <form className="login-form" onSubmit={""}>
+                <form className="login-form">
                     <div className="LoginMainInput-group">
                         <label htmlFor="username" style={{ width: "40px" }}>
                             <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "20px" }} />

@@ -17,13 +17,13 @@ import java.util.List;
 @RequestMapping("/api/chat")
 public class ChatController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
+//	private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 
 	@Autowired
 	private ChatService chatService;
 
-	@Autowired
-	private SimpMessagingTemplate messagingTemplate;
+//	@Autowired
+//	private SimpMessagingTemplate messagingTemplate;
 
 	// 클라이언트가 특정 클럽 번호의 메시지를 가져올 때 사용하는 엔드포인트
 	@GetMapping("/{clubNo}/messages")
@@ -31,7 +31,7 @@ public class ChatController {
 		try {
 			return chatService.getMessagesByClub(clubNo);
 		} catch (Exception e) {
-			logger.error("Error fetching messages for clubNo {}: {}", clubNo, e.getMessage());
+//			logger.error("Error fetching messages for clubNo {}: {}", clubNo, e.getMessage());
 			return List.of(); // 오류가 발생하면 빈 리스트를 반환
 		}
 	}
@@ -42,10 +42,10 @@ public class ChatController {
 	public Chat sendMessageWebSocket(Chat chatMessage) {
 		try {
 			chatService.saveMessage(chatMessage.getClubNo(), chatMessage);
-			logger.info("Message saved and broadcasted: {}", chatMessage);
+//			logger.info("Message saved and broadcasted: {}", chatMessage);
 		} catch (Exception e) {
-			logger.error("Error saving message: {}", chatMessage, e);
-			messagingTemplate.convertAndSend("/topic/errors", "Error processing message: " + e.getMessage());
+//			logger.error("Error saving message: {}", chatMessage, e);
+//			messagingTemplate.convertAndSend("/topic/errors", "Error processing message: " + e.getMessage());
 		}
 		return chatMessage;
 	}
@@ -56,10 +56,10 @@ public class ChatController {
 	public Chat addUserWebSocket(Chat chatMessage) {
 		try {
 			chatMessage.setMessage(chatMessage.getUserId() + " joined!");
-			logger.info("User joined: {}", chatMessage.getUserId());
+//			logger.info("User joined: {}", chatMessage.getUserId());
 		} catch (Exception e) {
-			logger.error("Error adding user: {}", chatMessage.getUserId(), e);
-			messagingTemplate.convertAndSend("/topic/errors", "Error adding user: " + e.getMessage());
+//			logger.error("Error adding user: {}", chatMessage.getUserId(), e);
+//			messagingTemplate.convertAndSend("/topic/errors", "Error adding user: " + e.getMessage());
 		}
 		return chatMessage;
 	}

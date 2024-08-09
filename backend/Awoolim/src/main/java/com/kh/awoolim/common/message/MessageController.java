@@ -67,7 +67,7 @@ public class MessageController {
 		try {
 			if (storedCode != null && storedCode.equals(codeRequest.getCode())) {
 				Member member = memberService.findByPhone(codeRequest.getPhoneNumber());
-				log.info(member.toString());
+				
 				if (member == null) {
 					return ResponseEntity.status(HttpStatus.OK).body(Integer.valueOf(1));
 				} else {

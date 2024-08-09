@@ -48,6 +48,7 @@ public class MemberService {
 		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
 		member.setUserImage("dce899f2-eca3-4886-8400-f31bfd64de1f.png");
 		member.setUserBackImage("305d04e5-e53d-4419-8beb-555330a6a3d4.png");
+		System.out.println(member.getPassword());
 		mapper.create(member);
 	}
 	

@@ -137,7 +137,7 @@ const RegisterMember = () => {
                         withCredentials: true,
                     }
                 ).then(response => {
-                    if (response.status === 200) {
+                    if (response.data === 1) {
                         alert('회원가입이 완료되었습니다.');
                         nav('/login', { replace: true });
                     }
@@ -227,7 +227,7 @@ const RegisterMember = () => {
                         <div className='RegisterMemberInputArea'>
                             <label htmlFor="useremail"><span className='InputStarSpan'>*</span> 이메일</label>
                             <input type="email" id="useremail" name="useremail" value={formData.useremail} placeholder='이메일 형식에 맞게 작성하세요.'
-                                onChange={handleChange} onBlur={validateEmail} required readOnly={queryParams != null} />
+                                onChange={handleChange} onBlur={validateEmail} required readOnly={queryParams == null} />
                         </div>
                         <div className='RegisterMemberErrorArea'>
                             {userEmailError && <span className="error">{userEmailError}</span>}
@@ -265,7 +265,7 @@ const RegisterMember = () => {
                         <div className='RegisterMemberInputArea'>
                             <label htmlFor="username"><span className='InputStarSpan'>*</span> 이름</label>
                             <input type="text" name="username" value={formData.username} onChange={handleChange} onBlur={validateUserNamePatten} required placeholder='2~7자 한글로 작성하세요.'
-                                readOnly={queryParams != null} />
+                                readOnly={queryParams == null} />
                         </div>
                         <div className='RegisterMemberErrorArea'>
                             {userNameError && <span className='error' style={{ width: "23%", marginRight: "5px" }}>{userNameError}</span>}
